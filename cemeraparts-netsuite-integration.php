@@ -12,3 +12,5 @@
  * License: GPLv2 or later
  * Text Domain: cemeraparts_netsuite_integration
  */
+
+defined( 'ABSPATH' ) or die( 'Hey, you can\'t access this file, you silly human!'  );
