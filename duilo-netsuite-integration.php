@@ -17,10 +17,25 @@ defined( 'ABSPATH' ) or die( 'Hey, you can\'t access this file, you silly human!
 
 class DuiloNetsuiteIntegration 
 {
+    protected $plugin_name;
+
+    function __construct()
+    {
+        $this->plugin_name = plugin_basename( __FILE__ );
+    }
+
     public function enqueue_admin_scripts()
     {
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
+        add_filter( "plugin_action_links_$this->plugin_name", array( $this, 'settings_link' ) );
+    }
+
+    function settings_link( $links )
+    {
+        $new_link = '<a href="admin.php?page=duilo_netsuite_integration">Settings</a>';
+        array_push( $links, $new_link );
+        return $links;
     }
 
     public function activate()
