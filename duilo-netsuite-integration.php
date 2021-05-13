@@ -30,12 +30,12 @@ class DuiloNetsuiteIntegration
 
     public function add_admin_pages()
     {
-        add_menu_page( 'Duilo Netsuite Integration', 'Duilo NS', 'manage_options', 'duilo_netsuite_integration', 'admin_index', 'dashicons-store', 110 );
+        add_menu_page( 'Duilo Netsuite Integration', 'Duilo NS', 'manage_options', 'duilo_netsuite_integration', array( $this, 'admin_index' ), 'dashicons-store', 110 );
     }
 
     public function admin_index()
     {
-        // Render template
+        require_once plugin_dir_path( __FILE__ ) . 'templates/admin.php';
     }
 
     public function deactivate()
