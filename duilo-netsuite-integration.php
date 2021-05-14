@@ -15,61 +15,15 @@
 
 defined( 'ABSPATH' ) or die( 'Hey, you can\'t access this file, you silly human!'  );
 
-class DuiloNetsuiteIntegration 
-{
-    protected $plugin_name;
-
-    function __construct()
-    {
-        $this->plugin_name = plugin_basename( __FILE__ );
-    }
-
-    public function enqueue_admin_scripts()
-    {
-        add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
-        add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-        add_filter( "plugin_action_links_$this->plugin_name", array( $this, 'settings_link' ) );
-    }
-
-    function settings_link( $links )
-    {
-        $new_link = '<a href="admin.php?page=duilo_netsuite_integration">Settings</a>';
-        array_push( $links, $new_link );
-        return $links;
-    }
-
-    public function activate()
-    {
-        flush_rewrite_rules();
-    }
-
-    public function add_admin_pages()
-    {
-        add_menu_page( 'Duilo Netsuite Integration', 'Duilo NS', 'manage_options', 'duilo_netsuite_integration', array( $this, 'admin_index' ), 'dashicons-store', 110 );
-    }
-
-    public function admin_index()
-    {
-        require_once plugin_dir_path( __FILE__ ) . 'templates/admin.php';
-    }
-
-    public function deactivate()
-    {
-        flush_rewrite_rules();
-    }
-
-    public function admin_enqueue() 
-    {
-        wp_enqueue_style( 'duilo_netsuite_integration_style', plugins_url( '/assets/css/admin-style.css', __FILE__ ));
-        wp_enqueue_script( 'duilo_netsuite_integration_script', plugins_url( '/assets/js/admin-script.js', __FILE__ ), array( 'jquery' ) );
-    }
+if ( ! file_exists( dirname( __FILE__ ) . '/vendor/autoload.php') ) {
+    die;
 }
 
-if ( class_exists( 'DuiloNetsuiteIntegration' ) ) {
-    $DuiloNetsuiteIntegration = new DuiloNetsuiteIntegration();
+require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
-    $DuiloNetsuiteIntegration->enqueue_admin_scripts();
+if ( class_exists( 'Inc\\Init' ) ) {
+    define( 'DNSI_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+    define( 'DNSI_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-    register_activation_hook( __FILE__, array( $DuiloNetsuiteIntegration, 'activate' ) );
-    register_deactivation_hook( __FILE__, array( $DuiloNetsuiteIntegration, 'deactivate' ) );
+    Inc\Init::register_services();
 }

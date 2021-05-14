@@ -1,0 +1,15 @@
+{
+    "name": "jdevmanzo/duilo-netsuite-integration",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Jean Manzo",
+            "email": "jdevmanzo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./includes"}
+    }
+}
