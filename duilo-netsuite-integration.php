@@ -15,15 +15,22 @@
 
 defined( 'ABSPATH' ) or die( 'Hey, you can\'t access this file, you silly human!'  );
 
-if ( ! file_exists( dirname( __FILE__ ) . '/vendor/autoload.php') ) {
-    die;
+if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php') ) {
+    require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
-require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+function dnsi_activate_plugin() {
+    Inc\Base\Activate::activate();
+}
+register_activation_hook( __FILE__, 'dnsi_activate_plugin' );
+
+function dnsi_deactivate_plugin() {
+    Inc\Base\Deactivate::deactivate();
+}
+register_deactivation_hook( __FILE__, 'dnsi_deactivate_plugin' );
 
 if ( class_exists( 'Inc\\Init' ) ) {
-    define( 'DNSI_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-    define( 'DNSI_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
     Inc\Init::register_services();
+
 }

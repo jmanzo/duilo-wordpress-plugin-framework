@@ -5,7 +5,9 @@
 
 namespace Inc\Pages;
 
-class Admin
+use \Inc\Controller;
+
+class Admin extends Controller
 {
     public function register()
     {
@@ -19,6 +21,6 @@ class Admin
 
     public function admin_index()
     {
-        require_once DNSI_PLUGIN_PATH . 'templates/admin.php';
+        require_once $this->plugin_path . 'templates/admin.php';
     }
 }
