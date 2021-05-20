@@ -7,6 +7,7 @@ namespace Inc\Pages;
 
 use \Inc\Controller;
 use \Inc\Api\Settings;
+use \Inc\Api\Templates\AdminTemplate;
 
 class Admin extends Controller
 {
@@ -16,24 +17,42 @@ class Admin extends Controller
 
     public $subpages = array();
 
-    public function __construct()
+    public $templates;
+
+    public function register()
     {
         $this->settings = new Settings();
 
+        $this->templates = new AdminTemplate();
+
+        $this->setPages();
+
+        $this->setSubpages();
+
+        $this->settings
+            ->addPages( $this->pages )
+            ->withSubPage( 'Integration' )
+            ->addSubPages( $this->subpages )
+            ->register();
+    }
+
+    public function setPages()
+    {
         $this->pages = array(
             array(
                 'page_title' => 'Duilo Netsuite Integration', 
                 'menu_title' => 'Duilo NS', 
                 'capability' => 'manage_options', 
                 'menu_slug' => 'duilo_netsuite_integration', 
-                'callback' => function() {
-                    echo '<h1>Duilo Netsuite Integration</h1>';
-                }, 
+                'callback' => array( $this->templates, 'dashboard' ), 
                 'icon_url' => 'dashicons-store', 
                 'position' => 110
             )
         );
+    }
 
+    public function setSubpages()
+    {
         $this->subpages = array(
 			array(
 				'parent_slug' => 'duilo_netsuite_integration', 
@@ -41,17 +60,8 @@ class Admin extends Controller
 				'menu_title' => 'Settings', 
 				'capability' => 'manage_options', 
 				'menu_slug' => 'duilo_netsuite_integration_settings', 
-				'callback' => function() { echo '<h1>Settings</h1>'; }
+				'callback' =>  array( $this->templates, 'settings' )
 			)
 		);
-    }
-
-    public function register()
-    {
-        $this->settings
-            ->addPages( $this->pages )
-            ->withSubPage( 'Integration' )
-            ->addSubPages( $this->subpages )
-            ->register();
     }
 }
