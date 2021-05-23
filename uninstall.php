@@ -2,7 +2,7 @@
 /**
  * Uninstallation file
  * 
- * @package DuiloNetsuiteIntegration
+ * @package DuiloFramework
  */
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     die;

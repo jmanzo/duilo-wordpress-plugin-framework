@@ -1,6 +1,6 @@
 <?php
 /**
- * @package DuiloNetsuiteIntegration
+ * @package DuiloFramework
  */
 
 namespace Inc;

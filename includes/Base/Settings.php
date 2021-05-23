@@ -1,6 +1,6 @@
 <?php
 /**
- * @package DuiloNetsuiteIntegration
+ * @package DuiloFramework
  */
 
 namespace Inc\Base;
@@ -16,7 +16,7 @@ class Settings extends Controller
 
     public function settings_link( $links )
     {
-        $new_link = '<a href="admin.php?page=duilo_netsuite_integration">Settings</a>';
+        $new_link = '<a href="admin.php?page=duilo_plugin">Settings</a>';
         array_push( $links, $new_link );
         return $links;
     }

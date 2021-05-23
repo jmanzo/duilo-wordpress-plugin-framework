@@ -1,4 +1,4 @@
-<h1>Duilo Netsuite Integration</h1>
+<h1>Duilo Framework</h1>
 
 <?php settings_errors() ?>
 

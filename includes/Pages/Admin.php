@@ -1,14 +1,15 @@
 <?php
 /**
- * @package DuiloNetsuiteIntegration
+ * @package DuiloFramework
  */
 
 namespace Inc\Pages;
 
 use \Inc\Controller;
 use \Inc\Api\Settings;
+use \Inc\Api\Validator;
+use \Inc\Api\AdminCallbacks;
 use \Inc\Api\Templates\AdminTemplate;
-use \Inc\Api\Callbacks\AdminCallbacks;
 
 class Admin extends Controller
 {
@@ -20,7 +21,9 @@ class Admin extends Controller
 
     public $templates;
 
-    public $callbacks;
+    public $admin;
+
+    public $validator;
 
     public function register()
     {
@@ -28,7 +31,9 @@ class Admin extends Controller
 
         $this->templates = new AdminTemplate();
 
-        $this->callbacks = new AdminCallbacks();
+        $this->admin = new AdminCallbacks();
+
+        $this->validator = new Validator();
 
         $this->setPages();
 
@@ -51,10 +56,10 @@ class Admin extends Controller
     {
         $this->pages = array(
             array(
-                'page_title' => 'Duilo Netsuite Integration', 
+                'page_title' => 'Duilo Framework', 
                 'menu_title' => 'Duilo NS', 
                 'capability' => 'manage_options', 
-                'menu_slug' => 'duilo_netsuite_integration', 
+                'menu_slug' => 'duilo_plugin', 
                 'callback' => array( $this->templates, 'dashboard' ), 
                 'icon_url' => 'dashicons-store', 
                 'position' => 110
@@ -66,11 +71,11 @@ class Admin extends Controller
     {
         $this->subpages = array(
 			array(
-				'parent_slug' => 'duilo_netsuite_integration', 
+				'parent_slug' => 'duilo_plugin', 
 				'page_title' => 'Settings', 
 				'menu_title' => 'Settings', 
 				'capability' => 'manage_options', 
-				'menu_slug' => 'duilo_netsuite_integration_settings', 
+				'menu_slug' => 'duilo_plugin_settings', 
 				'callback' =>  array( $this->templates, 'settings' )
 			)
 		);
@@ -81,12 +86,13 @@ class Admin extends Controller
         $args = array(
             array(
                 'option_group' => 'duilo_netsuite_options_group',
-                'option_name' => 'duilo_netsuite_text_example',
-                'callback' => array( $this->callbacks, 'optionsGroup' )
+                'option_name' => 'text_example',
+                'callback' => array( $this->validator, 'validate' )
             ),
             array(
                 'option_group' => 'duilo_netsuite_options_group',
-                'option_name' => 'duilo_netsuite_first_name'
+                'option_name' => 'checkbox_example',
+                'callback' => array( $this->validator, 'validate' )
             )
         );
 
@@ -99,7 +105,7 @@ class Admin extends Controller
 			array(
 				'id' => 'duilo_netsuite_admin_index',
 				'title' => 'Settings',
-				'callback' => array( $this->callbacks, 'adminSection' ),
+				'callback' => array( $this->admin, 'adminSection' ),
 				'page' => 'duilo_netsuite_plugin'
 			)
 		);
@@ -113,22 +119,23 @@ class Admin extends Controller
 			array(
 				'id' => 'text_example',
 				'title' => 'Text Example',
-				'callback' => array( $this->callbacks, 'textExample' ),
+				'callback' => array( $this->admin, 'textField' ),
 				'page' => 'duilo_netsuite_plugin',
 				'section' => 'duilo_netsuite_admin_index',
 				'args' => array(
 					'label_for' => 'text_example',
-					'class' => 'example-class'
+					'class' => 'example-class',
+                    'placeholder' => 'Text example'
 				)
             ),
             array(
-				'id' => 'first_name',
-				'title' => 'First Name',
-				'callback' => array( $this->callbacks, 'firstName' ),
+				'id' => 'checkbox_example',
+				'title' => 'Checkbox Example',
+				'callback' => array( $this->admin, 'checkboxField' ),
 				'page' => 'duilo_netsuite_plugin',
 				'section' => 'duilo_netsuite_admin_index',
 				'args' => array(
-					'label_for' => 'first_name',
+					'label_for' => 'checkbox_example',
 					'class' => 'example-class'
 				)
 			)
