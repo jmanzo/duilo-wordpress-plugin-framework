@@ -16,7 +16,7 @@ class Enqueue extends Controller
 
     public function admin_enqueue() 
     {
-        wp_enqueue_style( 'duilo_plugin_style', $this->plugin_url . '/assets/css/admin-style.min.css' );
-        wp_enqueue_script( 'duilo_plugin_script', $this->plugin_url . '/assets/js/admin-script.min.js', array( 'jquery' ) );
+        wp_enqueue_style( 'duilo_plugin_style', $this->plugin_url . '/dist/css/index.min.css' );
+        wp_enqueue_script( 'duilo_plugin_script', $this->plugin_url . '/dist/js/admin-script.min.js', array( 'jquery' ) );
     }
 }

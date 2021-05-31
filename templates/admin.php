@@ -18,7 +18,6 @@
 
 <div class="tab-content">
     <div class="tab-pane active" id="tab-1">
-        <h3>General</h3>
         <form action="options.php" method="post">
             <?php
                 settings_fields( 'duilo_netsuite_options_group' );
