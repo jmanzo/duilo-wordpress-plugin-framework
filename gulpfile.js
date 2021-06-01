@@ -58,5 +58,5 @@ function watchFiles( cb ) {
 }
 
 exports.default = gulp.series( clean, gulp.parallel( styles, js ) );
-exports.watch = watchFiles;
+exports.watch = gulp.series( clean, gulp.parallel( styles, js ), watchFiles );
 exports.build = gulp.parallel( styles, js );

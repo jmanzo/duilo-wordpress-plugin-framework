@@ -1,5 +1,5 @@
 window.addEventListener("load", function() {
-
+	
 	// store tabs variables
 	var tabs = document.querySelectorAll("ul.nav-tabs > li");
 
