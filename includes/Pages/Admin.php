@@ -131,12 +131,12 @@ class Admin extends Controller
             array(
 				'id' => 'checkbox_example',
 				'title' => 'Checkbox Example',
-				'callback' => array( $this->admin, 'checkboxField' ),
+				'callback' => array( $this->admin, 'uiToggleField' ),
 				'page' => 'duilo_netsuite_plugin',
 				'section' => 'duilo_netsuite_admin_index',
 				'args' => array(
 					'label_for' => 'checkbox_example',
-					'class' => 'example-class'
+					'class' => 'ui-toggle'
 				)
 			)
 		);

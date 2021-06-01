@@ -14,6 +14,15 @@ class AdminCallbacks extends Controller
 		echo 'Check this beautiful section!';
 	}
 
+	public function uiToggleField( $args )
+	{
+		$id = $args['label_for'];
+		$value = get_option( $id );
+		$class = $args['class'];
+
+		echo '<div class="'. $class .'"><input type="checkbox" id="' . $id . '" name="' . $id . '" value="1" ' . ( $value ? 'checked' : '' ) . ' /><label for="'. $id .'"><div></div></label></div>';
+	}
+
 	public function checkboxField( $args )
 	{
 		$id = $args['label_for'];
