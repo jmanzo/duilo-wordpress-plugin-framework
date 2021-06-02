@@ -22,4 +22,7 @@ You'll need to reference and start developing your functions and features in thi
 
 In the Init Class, you'll see a `get_services` method, where you need to set your needed classes. So, for example, if you want a API Class instantiated here, create the class and make sure you add a `register` method inside. This method will be used to initialize all the logic of your plugin.
 
+## Set Option Groups, Sections and fields
+To set the groups, sections and fields, you need to edit the Controller Class. Inside the constructor, you'll see a `$this->manager` property where in the same current order of this example, can be set.
+
 ## UI options

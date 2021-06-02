@@ -41,10 +41,6 @@ class Admin extends Controller
 
         $this->setSettings();
 
-		$this->setSections();
-
-		$this->setFields();
-
         $this->settings
             ->addPages( $this->pages )
             ->withSubPage( 'Integration' )
@@ -83,64 +79,44 @@ class Admin extends Controller
 
     public function setSettings()
     {
-        $args = array(
-            array(
-                'option_group' => 'duilo_netsuite_options_group',
-                'option_name' => 'text_example',
-                'callback' => array( $this->validator, 'validate' )
-            ),
-            array(
-                'option_group' => 'duilo_netsuite_options_group',
-                'option_name' => 'checkbox_example',
-                'callback' => array( $this->validator, 'validate' )
-            )
-        );
+        $group_args = array();
+        $section_args = array();
+        $field_args = array();
 
-        $this->settings->setSettings( $args );
+        foreach ( $this->managers as $manager ) {
+            foreach ( $manager['sections'] as $section ) {
+                $section_args[] = array(
+                    'id' => $section['id'],
+                    'title' => $section['title'],
+                    // 'callback' => array( $this->admin, 'adminSection' ),
+                    'page' => $section['menu_slug']
+                );
+
+                foreach ( $section['fields'] as $field ) {
+                    $group_args[] = array(
+                        'option_group' => $manager['option_group'],
+                        'option_name' => $field['id'],
+                        'callback' => array( $this->validator, 'validate' )
+                    );
+
+                    $field_args[] = array(
+                        'id' => $field['id'],
+                        'title' => $field['title'],
+                        'callback' => array( $this->admin, $field['callback'] ),
+                        'page' => $section['menu_slug'],
+                        'section' => $section['id'],
+                        'args' => array(
+                            'label_for' => $field['id'],
+                            'class' => isset( $field['args']['class'] ) ? $field['args']['class'] : '',
+                            'placeholder' => isset( $field['args']['placeholder'] ) ? $field['args']['placeholder'] : ''
+                        )
+                    );
+                }
+            }
+        }
+
+        $this->settings->setSettings( $group_args );
+        $this->settings->setSections( $section_args );
+        $this->settings->setFields( $field_args );
     }
-
-    public function setSections()
-	{
-		$args = array(
-			array(
-				'id' => 'duilo_netsuite_admin_index',
-				'title' => 'Settings',
-				'callback' => array( $this->admin, 'adminSection' ),
-				'page' => 'duilo_netsuite_plugin'
-			)
-		);
-
-		$this->settings->setSections( $args );
-	}
-
-	public function setFields()
-	{
-		$args = array(
-			array(
-				'id' => 'text_example',
-				'title' => 'Text Example',
-				'callback' => array( $this->admin, 'textField' ),
-				'page' => 'duilo_netsuite_plugin',
-				'section' => 'duilo_netsuite_admin_index',
-				'args' => array(
-					'label_for' => 'text_example',
-					'class' => 'example-class',
-                    'placeholder' => 'Text example'
-				)
-            ),
-            array(
-				'id' => 'checkbox_example',
-				'title' => 'Checkbox Example',
-				'callback' => array( $this->admin, 'uiToggleField' ),
-				'page' => 'duilo_netsuite_plugin',
-				'section' => 'duilo_netsuite_admin_index',
-				'args' => array(
-					'label_for' => 'checkbox_example',
-					'class' => 'ui-toggle'
-				)
-			)
-		);
-
-		$this->settings->setFields( $args );
-	}
 }

@@ -19,7 +19,7 @@ class AdminCallbacks extends Controller
 		$id = $args['label_for'];
 		$value = get_option( $id );
 		$class = $args['class'];
-
+		
 		echo '<div class="'. $class .'"><input type="checkbox" id="' . $id . '" name="' . $id . '" value="1" ' . ( $value ? 'checked' : '' ) . ' /><label for="'. $id .'"><div></div></label></div>';
 	}
 
@@ -27,8 +27,8 @@ class AdminCallbacks extends Controller
 	{
 		$id = $args['label_for'];
 		$value = get_option( $id );
-		$class = $args['class'];
-
+		$class = isset( $args['class'] ) ? $args['class'] : '';
+		
 		echo '<input type="checkbox" name="' . $id . '" value="1" class="' . $class . '" ' . ( $value ? 'checked' : '' ) . ' />';
 	}
 
@@ -36,7 +36,7 @@ class AdminCallbacks extends Controller
 	{
 		$id = $args['label_for'];
 		$value = get_option( $id );
-		$class = $args['class'];
+		$class = isset( $args['class'] ) ? $args['class'] : '';
 		$placeholder = ( isset( $args['placeholder'] ) ? 'placeholder="' . $args['placeholder'] . '"' : '' );
 
 		echo '<input type="text" class="' . $class . '" name="' . $id . '" value="' . $value . '" ' . $placeholder . ' />';
