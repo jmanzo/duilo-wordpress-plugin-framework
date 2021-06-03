@@ -26,3 +26,6 @@ In the Init Class, you'll see a `get_services` method, where you need to set you
 To set the groups, sections and fields, you need to edit the Controller Class. Inside the constructor, you'll see a `$this->manager` property where in the same current order of this example, can be set.
 
 ## UI options
+There are 6 Form UI fields for the administration panel. You can use either `uiToggleField`, `textField`, `textareaField`, `checkboxField`, `radioField` or `dropdownField`. Those values can be set on the Admin Controller at `includes/Controller.php` with the `$this->manager` declarated property and the key `callback`. It's where you have to set your option_groups, sections and fields.
+
+You'll see 6 examples of field declarations in the location.

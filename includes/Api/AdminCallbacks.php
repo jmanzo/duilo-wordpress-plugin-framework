@@ -9,36 +9,107 @@ use \Inc\Controller;
 
 class AdminCallbacks extends Controller
 {
+	protected $field_id;
+
+	protected $field_value;
+
+	protected $field_class;
+
+	protected $field_placeholder;
+
+	protected $menu_slug;
+
     public function adminSection()
 	{
 		echo 'Check this beautiful section!';
 	}
 
-	public function uiToggleField( $args )
+	/**
+     * Set data fields on every class instance to modular and optimization
+     * @return avoid
+     */
+	public function setDataFields( array $args )
 	{
-		$id = $args['label_for'];
-		$value = get_option( $id );
-		$class = $args['class'];
-		
-		echo '<div class="'. $class .'"><input type="checkbox" id="' . $id . '" name="' . $id . '" value="1" ' . ( $value ? 'checked' : '' ) . ' /><label for="'. $id .'"><div></div></label></div>';
+		$this->menu_slug = $this->plugin_slug;
+		$this->field_id = $args['label_for'];
+		$this->field_value = isset( get_option( $this->menu_slug )[$this->field_id] ) ? get_option( $this->menu_slug )[$this->field_id] : '';
+		$this->field_class = isset( $args['class'] ) ? $args['class'] : '';
+		$this->field_placeholder = ( isset( $args['placeholder'] ) ? 'placeholder="' . $args['placeholder'] . '"' : '' );
 	}
 
-	public function checkboxField( $args )
+	/**
+     * Toggle Field for admin form UI
+     * @return string Toggle styled field
+     */
+	public function uiToggleField( array $args )
 	{
-		$id = $args['label_for'];
-		$value = get_option( $id );
-		$class = isset( $args['class'] ) ? $args['class'] : '';
+		$this->setDataFields( $args );
 		
-		echo '<input type="checkbox" name="' . $id . '" value="1" class="' . $class . '" ' . ( $value ? 'checked' : '' ) . ' />';
+		echo '<div class="'. $this->field_class .'"><input type="checkbox" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" ' . ( $this->field_value ? 'checked' : '' ) . ' /><label for="'. $this->field_id .'"><div></div></label></div>';
 	}
 
-	public function textField( $args )
+	/**
+     * Checkbox field for admin form UI
+     * @return string Checkbox styled field
+     */
+	public function checkboxField( array $args )
 	{
-		$id = $args['label_for'];
-		$value = get_option( $id );
-		$class = isset( $args['class'] ) ? $args['class'] : '';
-		$placeholder = ( isset( $args['placeholder'] ) ? 'placeholder="' . $args['placeholder'] . '"' : '' );
+		$this->setDataFields( $args );
+		
+		echo '<input type="checkbox" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" class="' . $this->field_class . '" ' . ( $this->field_value ? 'checked' : '' ) . ' />';
+	}
 
-		echo '<input type="text" class="' . $class . '" name="' . $id . '" value="' . $value . '" ' . $placeholder . ' />';
+	/**
+     * Radio field for admin form UI
+     * @return string Radio styled field
+     */
+	public function radioField( array $args )
+	{
+		$this->setDataFields( $args );
+		
+		echo '<input type="radio" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" class="' . $this->field_class . '" ' . ( $this->field_value ? 'checked' : '' ) . ' />';
+	}
+
+	/**
+     * Text field for admin form UI
+     * @return string Text styled field
+     */
+	public function textField( array $args )
+	{
+		$this->setDataFields( $args );
+
+		echo '<input type="text" id="' . $this->field_id . '" class="' . $this->field_class . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="' . $this->field_value . '" ' . $this->field_placeholder . ' />';
+	}
+
+	/**
+     * Textarea field for admin form UI
+     * @return string Textarea styled field
+     */
+	public function textareaField( array $args )
+	{
+		$this->setDataFields( $args );
+
+		echo '<textarea id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" rows="4" ' . $this->field_placeholder . '>' . $this->field_value . '</textarea>';
+	}
+
+	/**
+     * Dropdown field for admin form UI
+     * @return string Dropdown styled field
+     */
+	public function dropdownField( array $args )
+	{
+		$this->setDataFields( $args );
+
+		echo '<select name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" id="' . $this->field_id . '" class="' . $this->field_class . '">';
+
+			echo '<option value="">Select an option</option>';
+
+			if ( ! empty( $args['options'] ) ) {
+				foreach( $args['options'] as $key => $value ) {
+					echo '<option value="' . $key . '">' . $value . '</option>';
+				}
+			}
+
+		echo '</select>';
 	}
 }

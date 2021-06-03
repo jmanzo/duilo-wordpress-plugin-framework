@@ -84,31 +84,32 @@ class Admin extends Controller
         $field_args = array();
 
         foreach ( $this->managers as $manager ) {
+            $group_args[] = array(
+                'option_group' => $manager['option_group'],
+                'option_name' => $manager['page'],
+                'callback' => array( $this->validator, 'validate' )
+            );
+
             foreach ( $manager['sections'] as $section ) {
                 $section_args[] = array(
                     'id' => $section['id'],
                     'title' => $section['title'],
                     // 'callback' => array( $this->admin, 'adminSection' ),
-                    'page' => $section['menu_slug']
+                    'page' => $manager['page']
                 );
 
                 foreach ( $section['fields'] as $field ) {
-                    $group_args[] = array(
-                        'option_group' => $manager['option_group'],
-                        'option_name' => $field['id'],
-                        'callback' => array( $this->validator, 'validate' )
-                    );
-
                     $field_args[] = array(
                         'id' => $field['id'],
                         'title' => $field['title'],
                         'callback' => array( $this->admin, $field['callback'] ),
-                        'page' => $section['menu_slug'],
+                        'page' => $manager['page'],
                         'section' => $section['id'],
                         'args' => array(
                             'label_for' => $field['id'],
                             'class' => isset( $field['args']['class'] ) ? $field['args']['class'] : '',
-                            'placeholder' => isset( $field['args']['placeholder'] ) ? $field['args']['placeholder'] : ''
+                            'placeholder' => isset( $field['args']['placeholder'] ) ? $field['args']['placeholder'] : '',
+                            'options' => isset( $field['args']['options'] ) ? $field['args']['options'] : array()
                         )
                     );
                 }
