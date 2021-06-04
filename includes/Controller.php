@@ -73,7 +73,11 @@ class Controller
                                 'title' => 'Radio Example',
                                 'callback' => 'radioField',
                                 'args' => array(
-                                    'class' => 'radio-example'
+                                    'class' => 'radio-example',
+                                    'options' => array(
+                                        '1' => 'Yes',
+                                        '0' => 'No'
+                                    )
                                 )
                             ),
                             array(
@@ -83,10 +87,9 @@ class Controller
                                 'args' => array(
                                     'class' => '',
                                     'options' => array(
-                                        '_key_' => 'Key _',
-                                        '_key2_' => 'Key _2',
-                                        '_key3_' => 'Key _3',
-                                        'Key _4' => 'Key _4'
+                                        'option1' => 'Option 1',
+                                        'option2' => 'Option 2',
+                                        'option3' => 'Option 3'
                                     )
                                 )
                             )

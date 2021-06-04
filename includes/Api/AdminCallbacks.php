@@ -44,8 +44,10 @@ class AdminCallbacks extends Controller
 	public function uiToggleField( array $args )
 	{
 		$this->setDataFields( $args );
+
+		$checked = ( $this->field_value !== '' ) ? 'checked' : '';
 		
-		echo '<div class="'. $this->field_class .'"><input type="checkbox" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" ' . ( $this->field_value ? 'checked' : '' ) . ' /><label for="'. $this->field_id .'"><div></div></label></div>';
+		echo '<div class="'. $this->field_class .'"><input type="checkbox" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" ' . $checked . ' /><label for="'. $this->field_id .'"><div></div></label></div>';
 	}
 
 	/**
@@ -55,8 +57,10 @@ class AdminCallbacks extends Controller
 	public function checkboxField( array $args )
 	{
 		$this->setDataFields( $args );
+
+		$checked = ( $this->field_value !== '' ) ? 'checked' : '';
 		
-		echo '<input type="checkbox" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" class="' . $this->field_class . '" ' . ( $this->field_value ? 'checked' : '' ) . ' />';
+		echo '<input type="checkbox" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" class="' . $this->field_class . '" ' . $checked . ' />';
 	}
 
 	/**
@@ -66,8 +70,21 @@ class AdminCallbacks extends Controller
 	public function radioField( array $args )
 	{
 		$this->setDataFields( $args );
+
+		if ( ! empty( $args['options'] ) ) {
+			echo '<div class="' . $this->field_class . '">';
+
+			foreach( $args['options'] as $key => $value ) {
+				$checked = ( $this->field_value == $key ) ? 'checked' : '';
+				
+				echo $value . ' ';
+				echo '<input type="radio" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="' . $key . '" ' . $checked . ' /> ';
+				
+			}
+
+			echo '</div>';
+		}
 		
-		echo '<input type="radio" id="' . $this->field_id . '" name="' . $this->menu_slug . '[' . $this->field_id . ']' . '" value="1" class="' . $this->field_class . '" ' . ( $this->field_value ? 'checked' : '' ) . ' />';
 	}
 
 	/**
@@ -106,7 +123,8 @@ class AdminCallbacks extends Controller
 
 			if ( ! empty( $args['options'] ) ) {
 				foreach( $args['options'] as $key => $value ) {
-					echo '<option value="' . $key . '">' . $value . '</option>';
+					$selected = ( $this->field_value === $key ) ? ' selected="selected"' : '';
+					echo '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 				}
 			}
 
