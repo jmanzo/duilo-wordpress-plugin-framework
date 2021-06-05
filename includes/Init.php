@@ -14,9 +14,10 @@ final class Init
     public static function get_services()
     {
         return array(
-            Pages\Admin::class,
+            Src\SettingsController::class,
+            Src\PagesController::class,
             Base\Enqueue::class,
-            Base\Settings::class
+            Base\Settings::class,
         );
     }
 
