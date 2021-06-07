@@ -26,6 +26,7 @@ class AdminCallbacks extends Controller
 
 	/**
      * Set data fields on every class instance to modular and optimization
+	 * @param array ( field_id, field_value, classes, placeholder if exists and main menu slug )
      * @return avoid
      */
 	public function setDataFields( array $args )
@@ -39,6 +40,7 @@ class AdminCallbacks extends Controller
 
 	/**
      * Toggle Field for admin form UI
+	 * @param array ( field_id, field_value, classes, placeholder if exists and main menu slug )
      * @return string Toggle styled field
      */
 	public function uiToggleField( array $args )
@@ -52,6 +54,7 @@ class AdminCallbacks extends Controller
 
 	/**
      * Checkbox field for admin form UI
+	 * @param array ( field_id, field_value, classes, placeholder if exists and main menu slug )
      * @return string Checkbox styled field
      */
 	public function checkboxField( array $args )
@@ -65,6 +68,7 @@ class AdminCallbacks extends Controller
 
 	/**
      * Radio field for admin form UI
+	 * @param array ( field_id, field_value, classes, placeholder if exists and main menu slug )
      * @return string Radio styled field
      */
 	public function radioField( array $args )
@@ -89,6 +93,7 @@ class AdminCallbacks extends Controller
 
 	/**
      * Text field for admin form UI
+	 * @param array ( field_id, field_value, classes, placeholder if exists and main menu slug )
      * @return string Text styled field
      */
 	public function textField( array $args )
@@ -100,6 +105,7 @@ class AdminCallbacks extends Controller
 
 	/**
      * Textarea field for admin form UI
+	 * @param array ( field_id, field_value, classes, placeholder if exists and main menu slug )
      * @return string Textarea styled field
      */
 	public function textareaField( array $args )
@@ -111,6 +117,7 @@ class AdminCallbacks extends Controller
 
 	/**
      * Dropdown field for admin form UI
+	 * @param array ( field_id, field_value, classes, placeholder if exists and main menu slug )
      * @return string Dropdown styled field
      */
 	public function dropdownField( array $args )
