@@ -10,7 +10,6 @@ namespace Inc\Src;
 use \Inc\Controller;
 use \Inc\Api\Settings;
 use \Inc\Api\AdminCallbacks;
-use \Inc\Api\Templates\AdminTemplate;
 
 class PagesController extends Controller
 {
@@ -20,14 +19,11 @@ class PagesController extends Controller
 
     public $subpages = array();
 
-    public $templates;
-
     public $admin;
 
     public function register()
     {
         $this->settings = new Settings();
-        $this->templates = new AdminTemplate();
         $this->admin = new AdminCallbacks();
         $this->setPages();
         $this->setSubpages();
@@ -50,7 +46,7 @@ class PagesController extends Controller
                 'menu_title' => 'Duilo NS', 
                 'capability' => 'manage_options', 
                 'menu_slug' => 'duilo_plugin', 
-                'callback' => array( $this->templates, 'dashboard' ), 
+                'callback' => array( $this, 'dashboard' ), 
                 'icon_url' => 'dashicons-store', 
                 'position' => 110
             )
@@ -70,8 +66,28 @@ class PagesController extends Controller
 				'menu_title' => 'Settings', 
 				'capability' => 'manage_options', 
 				'menu_slug' => 'duilo_plugin_settings', 
-				'callback' =>  array( $this->templates, 'settings' )
+				'callback' =>  array( $this, 'settings' )
 			)
 		);
+    }
+
+    /**
+     * Render admin dashboard from the templates folder
+	 * @param none
+     * @return file Admin template file
+     */
+    public function dashboard()
+    {
+        require_once ( "$this->plugin_path/templates/admin.php" );
+    }
+
+    /**
+     * Render admin settings from the templates folder
+	 * @param none
+     * @return file Admin template file
+     */
+    public function settings()
+    {
+        require_once ( "$this->plugin_path/templates/settings.php" );
     }
 }
