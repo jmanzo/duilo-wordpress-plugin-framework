@@ -9,6 +9,11 @@ use \Inc\Controller;
 
 class Validator extends Controller
 {
+    /**
+     * Validate fields sent
+	 * @param array Array with fields sent from the menu and submenu process
+     * @return array Input fields to store in database
+     */
     public function validate( $input )
     {
         if ( ! isset( $input ) ) {
@@ -19,9 +24,9 @@ class Validator extends Controller
 
         foreach ( $input as $key => $value) {
             if ( $value == '1' ) {
-                $output[ $key ] = ( $value ? true : false );
+                $output[ sanitize_key( $key ) ] = ( $value ? true : false );
             } else {
-                $output[ $key ] = $value;
+                $output[ sanitize_key( $key ) ] = sanitize_text_field( $value );
             }
         }
 
