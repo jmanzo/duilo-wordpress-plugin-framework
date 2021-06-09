@@ -21,7 +21,7 @@ class Controller
     {
         $this->plugin_path = plugin_dir_path( dirname( __FILE__, 1 ) );
         $this->plugin_url = plugin_dir_url( dirname( __FILE__, 1 ) );
-        $this->plugin_name = plugin_basename( dirname( __FILE__, 2 ) . '/duilo-netsuite-integration.php' );
+        $this->plugin_name = plugin_basename( dirname( __FILE__, 2 ) . '/' . DUILO_PLUGIN_SLUG . '.php' );
         $this->plugin_slug = 'duilo_netsuite_plugin';
     }
 }
