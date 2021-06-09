@@ -28,6 +28,11 @@ The menu pages and subpages can be set inside the `PagesController` Class, locat
 ## Set Option Groups, Sections and fields
 To set the groups, sections and fields, you need to edit the `SettingsController` Class inside `includes/Src` folder. On `setManagers` method, you'll see a `$this->manager` property where in the same current order of this example, can be set.
 
+## Register new CustomPostTypes
+To register new custom post types, you should set them into the `CustomPostTypeController` in the Src folder. Using the `$this->custom_post_types` property, you can fill the list of arrays which will be used to create the new custom post types.
+
+Also, you can take a look in the official documentation to know what arguments can be used for new custom post types at this link: https://developer.wordpress.org/reference/functions/register_post_type/
+
 ## UI options
 There are 6 Form UI fields for the administration panel. You can use either `uiToggleField`, `textField`, `textareaField`, `checkboxField`, `radioField` or `dropdownField`. Those values can be set on the Admin Controller at `includes/Controller.php` with the `$this->manager` declarated property and the key `callback`. It's where you have to set your option_groups, sections and fields.
 

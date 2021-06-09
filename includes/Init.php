@@ -18,6 +18,7 @@ final class Init
             Src\PagesController::class,
             Base\Enqueue::class,
             Base\Settings::class,
+            Src\CustomPostTypeController::class
         );
     }
 
